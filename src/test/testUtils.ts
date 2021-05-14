@@ -1,0 +1,13 @@
+import { ShallowWrapper } from 'enzyme';
+
+/**
+ * Return node(s) with the given data-test attribute
+ * @function findByTestAttr
+ * @param {ShallowWrapper} wrapper - Enzyme shallow wrapper
+ * @param {string} val - Value of data-test attribute for search
+ * @returns {ShallowWrapper}
+ */
+export const findByTestAttr = (
+  wrapper: ShallowWrapper,
+  val: string
+): ShallowWrapper => wrapper.find(`[data-test='${val}']`);
