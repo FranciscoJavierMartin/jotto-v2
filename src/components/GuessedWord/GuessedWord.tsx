@@ -1,10 +1,8 @@
 import React from 'react';
+import { IGuessedWord } from '../../interfaces/guessedWord';
 
 export interface GuessedWordProps {
-  guessedWords: {
-    guessedWord: string;
-    letterMatchCount: number;
-  }[];
+  guessedWords: IGuessedWord[];
 }
 
 const GuessedWord: React.FC<GuessedWordProps> = ({ guessedWords }) => {

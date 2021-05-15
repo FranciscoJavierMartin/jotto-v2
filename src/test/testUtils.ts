@@ -1,13 +1,13 @@
-import { ShallowWrapper } from 'enzyme';
+import { ReactWrapper, ShallowWrapper } from 'enzyme';
 
 /**
  * Return node(s) with the given data-test attribute
  * @function findByTestAttr
- * @param {ShallowWrapper} wrapper - Enzyme shallow wrapper
+ * @param {ShallowWrapper | ReactWrapper} wrapper - Enzyme shallow wrapper
  * @param {string} val - Value of data-test attribute for search
- * @returns {ShallowWrapper}
+ * @returns {ShallowWrapper | ReactWrapper}
  */
 export const findByTestAttr = (
-  wrapper: ShallowWrapper,
+  wrapper: ShallowWrapper | ReactWrapper,
   val: string
-): ShallowWrapper => wrapper.find(`[data-test='${val}']`);
+): ShallowWrapper | ReactWrapper => wrapper.find(`[data-test='${val}']`);

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
 import { findByTestAttr } from '../../test/testUtils';
-import Input, { InputProps } from './Input';
+import Input from './Input';
 
 const mockSetCurrentGuess = jest.fn();
 

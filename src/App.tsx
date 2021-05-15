@@ -1,20 +1,20 @@
 import React from 'react';
 import Congrats from './components/Congrats/Congrats';
 import GuessedWord from './components/GuessedWord/GuessedWord';
+import Input from './components/Input/Input';
+import { IGuessedWord } from './interfaces/guessedWord';
 
 function App() {
+  const success = false;
+  const secretWord = 'party';
+  const guessedWords: IGuessedWord[] = [];
+
   return (
     <div className='container' data-test='component-app'>
       <h1>Jotto</h1>
       <Congrats success={true} />
-      <GuessedWord
-        guessedWords={[
-          {
-            guessedWord: 'train',
-            letterMatchCount: 3,
-          },
-        ]}
-      />
+      <Input success={success} secretWord={secretWord} />
+      <GuessedWord guessedWords={guessedWords} />
     </div>
   );
 }
