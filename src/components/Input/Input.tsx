@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export interface InputProps {
   secretWord: string;
-  success: boolean;
 }
 
-const Input: React.FC<InputProps> = ({ secretWord, success }) => {
+const Input: React.FC<InputProps> = ({ secretWord }) => {
   const [currentGuess, setCurrentGuess] = useState<string>('');
+  const success = useSelector((state) => state.success);
+
   return success ? (
     <div data-test='component-input' />
   ) : (
