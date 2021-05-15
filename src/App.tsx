@@ -1,6 +1,6 @@
 import React from 'react';
-import Congrats from './Congrats';
-import GuessedWord from './GuessedWord';
+import Congrats from './components/Congrats/Congrats';
+import GuessedWord from './components/GuessedWord/GuessedWord';
 
 function App() {
   return (

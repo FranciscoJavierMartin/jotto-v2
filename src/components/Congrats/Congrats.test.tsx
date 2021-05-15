@@ -1,6 +1,6 @@
 import { shallow, ShallowWrapper } from 'enzyme';
 
-import { findByTestAttr } from './test/testUtils';
+import { findByTestAttr } from '../../test/testUtils';
 import Congrats, { CongratsProps } from './Congrats';
 
 /**
