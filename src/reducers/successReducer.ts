@@ -1,11 +1,14 @@
-import { actionTypes } from '../actions';
+import { actionTypes, IAction } from '../actions';
 /**
  * @function successReducer
  * @param {boolean} state - Current success state
- * @param {object} action - Action to be reduced
+ * @param {any} action - Action to be reduced
  * @returns {boolean} - new success state
  */
-export default (state: boolean = false, action: any) => {
+export default function successReducer(
+  state: boolean = false,
+  action: IAction
+): boolean {
   let res: boolean;
   switch (action.type) {
     case actionTypes.CORRECT_GUESS:
@@ -15,4 +18,4 @@ export default (state: boolean = false, action: any) => {
       res = state;
   }
   return res;
-};
+}

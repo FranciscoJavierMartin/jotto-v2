@@ -1,5 +1,6 @@
 import { ReactWrapper, ShallowWrapper } from 'enzyme';
 import { createStore } from 'redux';
+import { RootState } from '../interfaces/state';
 
 import rootReducer from '../reducers';
 
@@ -18,8 +19,8 @@ export const findByTestAttr = (
 /**
  * Create a testing store with imported reducers, middleware, and initial state.
  * @function storeFactor
- * @param initialState - Initial state for store
+ * @param {RootState} initialState - Initial state for store
  * @returns {Store} - Redux Store
  */
-export const storeFactory = (initialState: any) =>
+export const storeFactory = (initialState: RootState) =>
   createStore(rootReducer, initialState);

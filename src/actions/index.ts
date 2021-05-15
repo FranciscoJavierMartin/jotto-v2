@@ -1,15 +1,20 @@
 import axios from 'axios';
 
-export const actionTypes = {
-  CORRECT_GUESS: 'CORRECT_GUESS',
-};
+export enum actionTypes {
+  CORRECT_GUESS = 'CORRECT_GUESS',
+}
+
+export interface IAction {
+  type: actionTypes;
+  payload?: any;
+}
 
 /**
  * @function correctGuess
  * @returns {object} - Action object with type 'CORRECT_GUESS'
  */
 export function correctGuess() {
-  return {};
+  return { type: actionTypes.CORRECT_GUESS };
 }
 
 export const getSecretWord = async (): Promise<string> => {

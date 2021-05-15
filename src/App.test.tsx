@@ -1,16 +1,27 @@
 import { mount, ReactWrapper } from 'enzyme';
-import { findByTestAttr } from './test/testUtils';
+import { findByTestAttr, storeFactory } from './test/testUtils';
+import { Provider } from 'react-redux';
+import { RootState } from './interfaces/state';
 import App from './App';
 
 // activate global mock to make sure getSecretWord does not make network call
 jest.mock('./actions');
 // eslint-disable-next-line import/first
 import { getSecretWord as mockGetSecretWord } from './actions';
+
 /**
  * Setup function for App component
  * @returns {ReactWrapper}
  */
-const setup = (): ReactWrapper => mount(<App />);
+const setup = (initialState: RootState = { success: false }): ReactWrapper => {
+  const store = storeFactory(initialState);
+
+  return mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+};
 
 test('renders without error', () => {
   const wrapper = setup();

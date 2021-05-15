@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 
 import { findByTestAttr, storeFactory } from '../../test/testUtils';
 import Input from './Input';
+import { RootState } from '../../interfaces/state';
 
 const mockSetCurrentGuess = jest.fn();
 
@@ -19,11 +20,10 @@ jest.mock('react', () => ({
  * @returns {ReactWrapper}
  */
 const setup = (
-  initialState = {},
+  initialState: RootState,
   secretWord: string = 'party'
 ): ReactWrapper => {
   const store = storeFactory(initialState);
-
   return mount(
     <Provider store={store}>
       <Input secretWord={secretWord} />
@@ -36,7 +36,7 @@ describe('render', () => {
     let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup({ succes: true });
+      wrapper = setup({ success: true });
     });
 
     test('Input renders without error', () => {
@@ -59,7 +59,7 @@ describe('render', () => {
     let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup({ succes: false });
+      wrapper = setup({ success: false });
     });
 
     test('Input renders without error', () => {
