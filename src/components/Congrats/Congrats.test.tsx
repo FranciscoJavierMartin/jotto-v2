@@ -1,19 +1,45 @@
-import { shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 
 import { findByTestAttr } from '../../test/testUtils';
 import Congrats, { CongratsProps } from './Congrats';
+import LanguageContext from '../../contexts/LanguageContext';
 
 /**
- * Factory function to create a ShallowWrapper for the Congrats component.
+ * Factory function to create a ReactWrapper for the Congrats component.
  * @function setup
- * @param props - Component props specific to this setup
- * @returns {ShallowWrapper}
+ * @param props - Context values specific to this setup
+ * @returns {ReactWrapper}
  */
-const setup = (props: CongratsProps = {}): ShallowWrapper =>
-  shallow(<Congrats {...props} />);
+const setup = ({
+  success,
+  language,
+}: {
+  success?: boolean;
+  language?: string;
+}): ReactWrapper => {
+  language = language || 'en';
+  success = success || false;
+  return mount(
+    <LanguageContext.Provider value={language}>
+      <Congrats success={success} />
+    </LanguageContext.Provider>
+  );
+};
+
+describe('languagePicker', () => {
+  test('correctly renders congrats string in english by default', () => {
+    const wrapper = setup({ success: true });
+    expect(wrapper.text()).toBe('Congratulations! You guessed the word!');
+  });
+
+  test('correctly renders congrats string in emoji', () => {
+    const wrapper = setup({ success: true, language: 'emoji' });
+    expect(wrapper.text()).toBe('🎯🎉');
+  });
+});
 
 test('renders without error', () => {
-  const wrapper = setup();
+  const wrapper = setup({});
   const component = findByTestAttr(wrapper, 'component-congrats');
   expect(component.length).toBe(1);
 });
