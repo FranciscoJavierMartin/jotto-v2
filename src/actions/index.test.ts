@@ -10,7 +10,7 @@ describe('getSecretWord', () => {
     moxios.uninstall();
   });
 
-  test('secretWord is returned', () => {
+  test('secretWord is returned', async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -19,8 +19,8 @@ describe('getSecretWord', () => {
       });
     });
 
-    return getSecretWord().then((secretWord) => {
-      expect(secretWord).toBe('party');
-    });
+    const mockSetSecretWord = jest.fn();
+    await getSecretWord(mockSetSecretWord);
+    expect(mockSetSecretWord).toHaveBeenCalledWith('party');
   });
 });
