@@ -24,7 +24,7 @@ describe.each([
     originalUseReducer = React.useReducer;
     const mockUseReducer = jest
       .fn()
-      .mockReturnValue([{ secretWord }, jest.fn()]);
+      .mockReturnValue([{ secretWord, language: 'en' }, jest.fn()]);
     React.useReducer = mockUseReducer;
     wrapper = setup();
   });

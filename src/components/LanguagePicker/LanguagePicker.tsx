@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface LanguagePickerProps {
-  setLanguage: any;
+  setLanguage: (language: string) => void;
 }
 
 const LanguagePicker: React.FC<LanguagePickerProps> = ({ setLanguage }) => {
