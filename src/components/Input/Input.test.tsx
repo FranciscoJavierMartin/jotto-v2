@@ -20,13 +20,17 @@ jest.mock('react', () => ({
  * @returns {ReactWrapper}
  */
 const setup = (
-  initialState: RootState,
+  initialState: RootState = {
+    secretWord: 'party',
+    success: false,
+    guessedWords: [],
+  },
   secretWord: string = 'party'
 ): ReactWrapper => {
   const store = storeFactory(initialState);
   return mount(
     <Provider store={store}>
-      <Input secretWord={secretWord} />
+      <Input />
     </Provider>
   );
 };
@@ -36,7 +40,7 @@ describe('render', () => {
     let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup({ success: true });
+      wrapper = setup({ success: true, secretWord: 'party', guessedWords: [] });
     });
 
     test('Input renders without error', () => {
@@ -59,7 +63,11 @@ describe('render', () => {
     let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup({ success: false });
+      wrapper = setup({
+        success: false,
+        secretWord: 'party',
+        guessedWords: [],
+      });
     });
 
     test('Input renders without error', () => {
@@ -84,7 +92,7 @@ describe('state controlled input field', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = setup({ success: false });
+    wrapper = setup({ success: false, secretWord: 'party', guessedWords: [] });
   });
 
   test('state updates with value of input box upon change', () => {

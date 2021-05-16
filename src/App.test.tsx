@@ -13,7 +13,13 @@ import { getSecretWord as mockGetSecretWord } from './actions';
  * Setup function for App component
  * @returns {ReactWrapper}
  */
-const setup = (initialState: RootState = { success: false }): ReactWrapper => {
+const setup = (
+  initialState: RootState = {
+    success: false,
+    secretWord: 'party',
+    guessedWords: [],
+  }
+): ReactWrapper => {
   const store = storeFactory(initialState);
 
   return mount(

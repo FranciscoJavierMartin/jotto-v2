@@ -1,7 +1,11 @@
 import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
+import { Provider } from 'react-redux';
 import App from './App';
-import { findByTestAttr } from './test/testUtils';
+import { findByTestAttr, storeFactory } from './test/testUtils';
+import { RootState } from './interfaces/state';
+
+jest.mock('./actions');
 
 /**
  * Create wrapper with specified initial conditions
@@ -10,8 +14,19 @@ import { findByTestAttr } from './test/testUtils';
  * @param
  * @returns {ReactWrapper} - Enzyme wrapper of mounted App component
  */
-const setup = (state = {}): ReactWrapper => {
-  const wrapper: ReactWrapper = mount(<App />);
+const setup = (
+  initialState: RootState = {
+    success: false,
+    secretWord: 'party',
+    guessedWords: [],
+  }
+): ReactWrapper => {
+  const store = storeFactory(initialState);
+  const wrapper: ReactWrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 
   const inputBox = findByTestAttr(wrapper, 'input-box');
   inputBox.simulate('change', { target: { value: 'train' } });
@@ -22,7 +37,7 @@ const setup = (state = {}): ReactWrapper => {
   return wrapper;
 };
 
-describe.skip('no word guessed', () => {
+describe('no word guessed', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -39,7 +54,7 @@ describe.skip('no word guessed', () => {
   });
 });
 
-describe.skip('some words guessed', () => {
+describe('some words guessed', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {
@@ -61,7 +76,7 @@ describe.skip('some words guessed', () => {
   });
 });
 
-describe.skip('guessed secred word', () => {
+describe('guessed secred word', () => {
   let wrapper: ReactWrapper;
 
   beforeEach(() => {

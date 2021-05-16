@@ -1,4 +1,5 @@
 import moxios from 'moxios';
+import { storeFactory } from '../test/testUtils';
 import { getSecretWord, actionTypes } from '.';
 
 describe('getSecretWord', () => {
@@ -11,6 +12,11 @@ describe('getSecretWord', () => {
   });
 
   test('secretWord is returned', () => {
+    const store = storeFactory({
+      success: false,
+      secretWord: 'party',
+      guessedWords: [],
+    });
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -19,7 +25,8 @@ describe('getSecretWord', () => {
       });
     });
 
-    return getSecretWord().then((secretWord) => {
+    return store.dispatch(getSecretWord()).then(() => {
+      const secretWord = store.getState().secretWord;
       expect(secretWord).toBe('party');
     });
   });

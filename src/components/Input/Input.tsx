@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../interfaces/state';
+import { guessWord } from '../../actions';
 
-export interface InputProps {
-  secretWord: string;
-}
+export interface InputProps {}
 
-const Input: React.FC<InputProps> = ({ secretWord }) => {
+const Input: React.FC<InputProps> = () => {
   const [currentGuess, setCurrentGuess] = useState<string>('');
   const success = useSelector<RootState>((state) => state.success);
+  const dispatch = useDispatch();
 
   return success ? (
     <div data-test='component-input' />
@@ -30,6 +30,7 @@ const Input: React.FC<InputProps> = ({ secretWord }) => {
           className='btn btn-primary mb-2'
           onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             event.preventDefault();
+            dispatch(guessWord(currentGuess));
             setCurrentGuess('');
           }}
         >

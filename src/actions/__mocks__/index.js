@@ -1,5 +1,5 @@
 module.exports = {
   ...jest.requireActual('..'),
   __esModule: true,
-  getSecretWord: jest.fn().mockRejectedValue(Promise.resolve('party')),
+  getSecretWord: jest.fn().mockRejectedValue({ type: 'mock' }),
 };

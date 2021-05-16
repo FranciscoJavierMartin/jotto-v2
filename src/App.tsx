@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Congrats from './components/Congrats/Congrats';
 import GuessedWord from './components/GuessedWord/GuessedWord';
 import Input from './components/Input/Input';
-import { IGuessedWord } from './interfaces/guessedWord';
 import { getSecretWord } from './actions';
+import { RootState } from './interfaces/state';
 
 function App() {
-  const secretWord = 'party';
-  const guessedWords: IGuessedWord[] = [];
+  const { success, guessedWords, secretWord } = useSelector<
+    RootState,
+    RootState
+  >((state) => state);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getSecretWord();
-  }, []);
+    dispatch(getSecretWord());
+  }, [dispatch]);
 
   return (
     <div className='container' data-test='component-app'>
       <h1>Jotto</h1>
-      <Congrats success={true} />
-      <Input secretWord={secretWord} />
+      <Congrats success={success} />
+      <Input />
       <GuessedWord guessedWords={guessedWords} />
     </div>
   );
