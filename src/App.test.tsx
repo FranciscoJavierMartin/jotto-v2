@@ -13,12 +13,6 @@ import { getSecretWord as mockGetSecretWord } from './actions';
  */
 const setup = (): ReactWrapper => mount(<App />);
 
-test('renders without error', () => {
-  const wrapper = setup();
-  const appComponent = findByTestAttr(wrapper, 'component-app');
-  expect(appComponent).toHaveLength(1);
-});
-
 describe.each([
   [null, true, false],
   ['party', false, true],
@@ -28,8 +22,9 @@ describe.each([
 
   beforeEach(() => {
     originalUseReducer = React.useReducer;
-    const mockUseReducer = jest.fn()
-      .mockRejectedValue([{ secretWord }, jest.fn()]);
+    const mockUseReducer = jest
+      .fn()
+      .mockReturnValue([{ secretWord }, jest.fn()]);
     React.useReducer = mockUseReducer;
     wrapper = setup();
   });
