@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 
 import { findByTestAttr } from '../../test/testUtils';
 import Input from './Input';
+import LanguageContext from '../../contexts/LanguageContext';
 
 const mockSetCurrentGuess = jest.fn();
 
@@ -12,23 +13,32 @@ jest.mock('react', () => ({
 }));
 
 /**
- * Factory function to create a ShallowWrapper for the Input component.
+ * Factory function to create a ReactWrapper for the Input component.
  * @function setup
- * @param props - Component props specific to this setup
- * @returns {ShallowWrapper}
+ * @param {object} testValues - Context and props specific to this setup
+ * @returns {ReactWrapper}
  */
-const setup = (
-  success: boolean = false,
-  secretWord: string = 'party'
-): ShallowWrapper =>
-  shallow(<Input secretWord={secretWord} success={success} />);
+const setup = ({
+  language = 'en',
+  success = false,
+  secretWord = 'party',
+}: {
+  language?: string;
+  success?: boolean;
+  secretWord?: string;
+}): ReactWrapper =>
+  mount(
+    <LanguageContext.Provider value={language}>
+      <Input secretWord={secretWord} success={success} />
+    </LanguageContext.Provider>
+  );
 
 describe('render', () => {
   describe('success is true', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup(true);
+      wrapper = setup({ success: true });
     });
 
     test('Input renders without error', () => {
@@ -48,10 +58,10 @@ describe('render', () => {
   });
 
   describe('success is false', () => {
-    let wrapper: ShallowWrapper;
+    let wrapper: ReactWrapper;
 
     beforeEach(() => {
-      wrapper = setup(false);
+      wrapper = setup({ success: false });
     });
 
     test('Input renders without error', () => {
@@ -72,11 +82,11 @@ describe('render', () => {
 });
 
 describe('state controlled input field', () => {
-  let wrapper: ShallowWrapper;
+  let wrapper: ReactWrapper;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = setup();
+    wrapper = setup({});
   });
 
   test('state updates with value of input box upon change', () => {
@@ -90,5 +100,19 @@ describe('state controlled input field', () => {
     const submitButton = findByTestAttr(wrapper, 'submit-button');
     submitButton.simulate('click', { preventDefault() {} });
     expect(mockSetCurrentGuess).toHaveBeenCalledWith('');
+  });
+});
+
+describe('languagePicker', () => {
+  test('correctly renders submit string in english', () => {
+    const wrapper = setup({ language: 'en' });
+    const submitButton = findByTestAttr(wrapper, 'submit-button');
+    expect(submitButton.text()).toBe('Submit');
+  });
+
+  test('correctly renders submit string in emoji', () => {
+    const wrapper = setup({ language: 'emoji' });
+    const submitButton = findByTestAttr(wrapper, 'submit-button');
+    expect(submitButton.text()).toBe('🚀');
   });
 });

@@ -1,7 +1,7 @@
 import { mount, ReactWrapper } from 'enzyme';
 
 import { findByTestAttr } from '../../test/testUtils';
-import Congrats, { CongratsProps } from './Congrats';
+import Congrats from './Congrats';
 import LanguageContext from '../../contexts/LanguageContext';
 
 /**
@@ -11,20 +11,17 @@ import LanguageContext from '../../contexts/LanguageContext';
  * @returns {ReactWrapper}
  */
 const setup = ({
-  success,
-  language,
+  success = false,
+  language = 'en',
 }: {
   success?: boolean;
   language?: string;
-}): ReactWrapper => {
-  language = language || 'en';
-  success = success || false;
-  return mount(
+}): ReactWrapper =>
+  mount(
     <LanguageContext.Provider value={language}>
       <Congrats success={success} />
     </LanguageContext.Provider>
   );
-};
 
 describe('languagePicker', () => {
   test('correctly renders congrats string in english by default', () => {
