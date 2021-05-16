@@ -1,5 +1,6 @@
 import { ReactWrapper, ShallowWrapper } from 'enzyme';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { middlewares } from '../configureStore';
 import { RootState } from '../interfaces/state';
 
 import rootReducer from '../reducers';
@@ -23,4 +24,4 @@ export const findByTestAttr = (
  * @returns {Store} - Redux Store
  */
 export const storeFactory = (initialState: RootState) =>
-  createStore(rootReducer, initialState);
+  createStore(rootReducer, initialState, applyMiddleware(...middlewares));
