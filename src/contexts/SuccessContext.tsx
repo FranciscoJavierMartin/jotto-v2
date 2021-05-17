@@ -1,19 +1,15 @@
 import React from 'react';
 
-const SuccessContext = React.createContext<boolean>(false);
+const SuccessContext = React.createContext<
+  [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+>([false, () => {}]);
 
 /**
  * @function useSuccess
  * @returns {Array} SuccessContext value, which is a state of [value, setter]
  */
 function useSuccess() {
-  const context = React.useContext(SuccessContext);
-
-  if (!context) {
-    throw new Error('useSuccess must be used within SuccessProvider');
-  }
-
-  return context;
+  return React.useContext(SuccessContext);
 }
 
 /**

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import LanguageContext from '../../contexts/LanguageContext';
+import SuccessContext from '../../contexts/SuccessContext';
 import stringsModule from '../../helpers/strings';
 
 export interface InputProps {
   secretWord: string;
-  success: boolean;
 }
 
-const Input: React.FC<InputProps> = ({ secretWord, success }) => {
+const Input: React.FC<InputProps> = ({ secretWord }) => {
+  const [success] = SuccessContext.useSuccess();
   const language = React.useContext(LanguageContext);
   const [currentGuess, setCurrentGuess] = useState<string>('');
+
   return success ? (
     <div data-test='component-input' />
   ) : (

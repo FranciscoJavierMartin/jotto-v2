@@ -8,6 +8,7 @@ import { getSecretWord } from './actions';
 import { actionTypes } from './constants/actionTypes';
 import { IAction, RootState } from './interfaces/state';
 import LanguageContext from './contexts/LanguageContext';
+import SuccessContext from './contexts/SuccessContext';
 
 /**
  * @function reducer to update state, automatically called by dispatch
@@ -64,8 +65,10 @@ function App() {
       <h1>Jotto</h1>
       <LanguageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
-        <Congrats success={true} />
-        <Input success={success} secretWord={state.secretWord} />
+        <SuccessContext.SuccessProvider>
+          <Congrats />
+          <Input secretWord={state.secretWord} />
+        </SuccessContext.SuccessProvider>
         <GuessedWord guessedWords={guessedWords} />
       </LanguageContext.Provider>
     </div>

@@ -4,6 +4,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import { findByTestAttr } from '../../test/testUtils';
 import Input from './Input';
 import LanguageContext from '../../contexts/LanguageContext';
+import SuccessContext from '../../contexts/SuccessContext';
 
 const mockSetCurrentGuess = jest.fn();
 
@@ -29,7 +30,9 @@ const setup = ({
 }): ReactWrapper =>
   mount(
     <LanguageContext.Provider value={language}>
-      <Input secretWord={secretWord} success={success} />
+      <SuccessContext.SuccessProvider value={[success, jest.fn()]}>
+        <Input secretWord={secretWord} />
+      </SuccessContext.SuccessProvider>
     </LanguageContext.Provider>
   );
 
