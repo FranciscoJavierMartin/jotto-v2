@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import LanguageContext from '../../contexts/LanguageContext';
 import SuccessContext from '../../contexts/SuccessContext';
+import GuessedWordsContext from '../../contexts/GuessedWordsContext';
 import stringsModule from '../../helpers/strings';
+import { getLetterMatchCount } from '../../helpers';
 
 export interface InputProps {
   secretWord: string;
 }
 
 const Input: React.FC<InputProps> = ({ secretWord }) => {
-  const [success] = SuccessContext.useSuccess();
+  const [success, setSuccess] = SuccessContext.useSuccess();
+  const [guessedWords, setGuessedWords] = GuessedWordsContext.useGuessedWords();
   const language = React.useContext(LanguageContext);
   const [currentGuess, setCurrentGuess] = useState<string>('');
 
@@ -35,6 +38,17 @@ const Input: React.FC<InputProps> = ({ secretWord }) => {
           className='btn btn-primary mb-2'
           onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             event.preventDefault();
+            const letterMatchCount = getLetterMatchCount(
+              currentGuess,
+              secretWord
+            );
+            setGuessedWords((prevState) => [
+              ...prevState,
+              { guessedWord: currentGuess, letterMatchCount },
+            ]);
+            if (currentGuess === secretWord) {
+              setSuccess(true);
+            }
             setCurrentGuess('');
           }}
         >
