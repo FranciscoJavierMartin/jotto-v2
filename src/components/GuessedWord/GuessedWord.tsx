@@ -1,13 +1,12 @@
 import React from 'react';
-import { IGuessedWord } from '../../interfaces/guessedWord';
 import LanguageContext from '../../contexts/LanguageContext';
 import stringsModule from '../../helpers/strings';
+import GuessedWordsContext from '../../contexts/GuessedWordsContext';
 
-export interface GuessedWordProps {
-  guessedWords: IGuessedWord[];
-}
+export interface GuessedWordProps {}
 
-const GuessedWord: React.FC<GuessedWordProps> = ({ guessedWords }) => {
+const GuessedWord: React.FC<GuessedWordProps> = () => {
+  const [guessedWords] = GuessedWordsContext.useGuessedWords();
   const language = React.useContext(LanguageContext);
   return (
     <div data-test='component-guessed-words'>

@@ -9,6 +9,7 @@ import { actionTypes } from './constants/actionTypes';
 import { IAction, RootState } from './interfaces/state';
 import LanguageContext from './contexts/LanguageContext';
 import SuccessContext from './contexts/SuccessContext';
+import GuessedWordsContext from './contexts/GuessedWordsContext';
 
 /**
  * @function reducer to update state, automatically called by dispatch
@@ -40,9 +41,6 @@ const reducer = (state: RootState, action: IAction): RootState => {
 };
 
 function App() {
-  const success = false;
-  const guessedWords: IGuessedWord[] = [];
-
   const [state, dispatch] = React.useReducer(reducer, {
     secretWord: '',
     language: 'en',
@@ -65,11 +63,13 @@ function App() {
       <h1>Jotto</h1>
       <LanguageContext.Provider value={state.language}>
         <LanguagePicker setLanguage={setLanguage} />
-        <SuccessContext.SuccessProvider>
-          <Congrats />
-          <Input secretWord={state.secretWord} />
-        </SuccessContext.SuccessProvider>
-        <GuessedWord guessedWords={guessedWords} />
+        <GuessedWordsContext.GuessedWordsProvider>
+          <SuccessContext.SuccessProvider>
+            <Congrats />
+            <Input secretWord={state.secretWord} />
+          </SuccessContext.SuccessProvider>
+          <GuessedWord />
+        </GuessedWordsContext.GuessedWordsProvider>
       </LanguageContext.Provider>
     </div>
   ) : (
